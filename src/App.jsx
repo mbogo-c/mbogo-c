@@ -1,30 +1,38 @@
-import { useState,useEffect } from "react";
 import Form from "./Form";
 import List from "./List";
 
-export default function App(){
-    const [req,setReq] = useState("users")
-    const [items,setItem] = useState([])
-    const API_URL = "https://jsonplaceholder.typicode.com/"
+import { useState, useEffect } from "react";
+export  default function App() {
+    const [reqType, setReqType] = useState("users");
+    const [data, setData] = useState([]);
+
+    const API_URL = "https://jsonplaceholder.typicode.com/";
+
+
 
     useEffect(()=>{
-        const fetchData = async() =>{
-            try {
-        fetch(`${API_URL}${req}`)
-        const response = await fetch(`${API_URL}${req}`);
-        const data = await response.json();
-        setItem(data)}
-        catch (error) {
-            console.error("Error fetching data:", error);
-        }
-    }
-    fetchData()}
-    ,[req])
-
-    return(
-        <div>
-            <Form req={req} setReq={setReq} />
-            <List items={items} />
+        async function fetchData(){
+            try{
+                const response = await fetch(`${API_URL}${reqType}`)
+                if(!response.ok){
+                    throw new Error(`error status code: ${response.status}`)
+                }{
+                    const result = await response.json();
+                    setData(result);
+                    console.log("data fetched:", result);
+                    console.log("reqType:", reqType);
+                }
+            }
+        catch(error){
+            console.error("error fetching data:", error)
+        }}
+        fetchData();
+    }, [reqType]);
+    return (
+        <div className="App">
+            <title>{reqType}</title>
+           <Form reqType={reqType} setReqType={setReqType} />
+           <List data={data} />
         </div>
-    )
+    );
 }

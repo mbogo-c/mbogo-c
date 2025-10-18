@@ -1,8 +1,8 @@
-export default function Button({ req,setReq,buttonText }) {
+export default function Button({ reqType,setReqType,buttonText }) {
      return (
           <button
-          className={ buttonText === req ? "selected": null}          type="button"
-          onClick={()=>setReq(buttonText)}
+          className={ buttonText === reqType ? "selected": null}          type="button"
+          onClick={()=>setReqType(buttonText)}
           >
                {buttonText}
           </button>

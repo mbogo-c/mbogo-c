@@ -1,22 +1,22 @@
 import Button from "./Button";
 
-export default function Form({ req, setReq }) {
+export default function Form({ reqType, setReqType }) {
 return (
      <form onSubmit={(e)=>e.preventDefault()}>
           <Button
           buttonText="users"
-          req={req}
-          setReq={setReq}
+          reqType={reqType}
+          setReqType={setReqType}
           />
           <Button
           buttonText="posts"
-          req={req}
-          setReq={setReq}
+          reqType={reqType}
+          setReqType={setReqType}
           />
           <Button
           buttonText="comments"
-          req={req}
-          setReq={setReq}
+          reqType={reqType}
+          setReqType={setReqType}
           />
 
      </form>
