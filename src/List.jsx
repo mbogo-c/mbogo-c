@@ -1,7 +1,7 @@
-export default function  List({items}) {
+export default function  List({data}) {
      return(
      <ul>
-        {items.map((item)=>(
+        {data.map((item)=>(
             <li key={item.id}>
                 {JSON.stringify(item)}
             </li>
