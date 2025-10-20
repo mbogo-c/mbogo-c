@@ -31,7 +31,7 @@ export default function App (){
     const [item, setItem] = useState('');
     
     function handleChange(e){
-        setItem(e.target.value);          
+        setItem(e.target.value.trimStart());          
     }
 
 function AddItem (){
@@ -40,7 +40,10 @@ function AddItem (){
                checked: false,
                item:item
           };
-          setItems ([...items, newItem]);
+          item.length ? `
+          ${setItems ([...items, newItem])} 
+          ${setItem('')}`
+          :
           setItem('');
 }   
 
@@ -48,6 +51,7 @@ function AddItem (){
         <div className="App">
             <h1 className="head">Gocery List</h1>
             <Header
+            item={item}
             handleChange={handleChange}
             AddItem={AddItem}
             />

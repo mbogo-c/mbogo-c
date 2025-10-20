@@ -1,10 +1,11 @@
-export default function Header ({handleChange,AddItem}){
+export default function Header ({item,handleChange,AddItem}){
 
      
      return(
-          <nav className="header">
-               <label htmlFor="add-item">
+          <form onSubmit={(e)=>e.preventDefault()} className="header">
+               <label htmlFor="">
                <input
+               value={item}
                onChange={handleChange}
                 type="text"
                  placeholder="Add Item"
@@ -16,6 +17,6 @@ export default function Header ({handleChange,AddItem}){
                <input type="text " id="search" placeholder="Search Item"/>    
                </label>           
                
-          </nav>
+          </form>
      );
 }
