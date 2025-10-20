@@ -1,10 +1,10 @@
-export default function Footer({items}){
+export default function Footer({filteredItems}) {
      
      return (
           <footer className="footer">
-               <h1>There are {items.length <= 1 ?
-               `${items.length} Item `:
-                `${items.length} Items`}</h1>
+               <h1>There are {filteredItems.length <= 1 ?
+               `${filteredItems.length} Item `:
+                `${filteredItems.length} Items`}</h1>
           </footer>
      )
 }

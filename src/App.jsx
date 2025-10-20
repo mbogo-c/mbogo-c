@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Header from "./Hearder";
 import  Items from "./Items";
 import Footer from "./Footer";
@@ -29,36 +29,54 @@ export default function App (){
         }
     ]);
     const [item, setItem] = useState('');
+    const [search, setSearch] = useState('');
+    const [filteredItems, setFilteredItems] = useState([]);
     
     function handleChange(e){
-        setItem(e.target.value.trimStart());          
-    }
+        setItem(e.target.value.trimStart()); 
+        
 
+    }
 function AddItem (){
      const newItem = {
                id: items.length ? items[items.length -1].id +1 : 1,
                checked: false,
-               item:item
+               item:item[0].toUpperCase() + item.slice(1)
           };
-          item.length ? `
-          ${setItems ([...items, newItem])} 
-          ${setItem('')}`
+          item.length ? `${setItems ([...items, newItem])}${setItem('')}`
           :
           setItem('');
+          console.log(items.length);
 }   
+console.log(search);
+
+function handleSearch (e){    
+    const filteredText = (e.target.value);
+   const filteredList =  items.filter((item)=>item.item.toLocaleLowerCase().includes(filteredText.toLocaleLowerCase()))
+
+   setFilteredItems(filteredList);
+   
+   
+}
+useEffect(()=>{
+setFilteredItems(items);
+},[items]);
 
     return(
         <div className="App">
             <h1 className="head">Gocery List</h1>
             <Header
+            filteredItems={filteredItems}
             item={item}
+            handleSearch={handleSearch}
             handleChange={handleChange}
             AddItem={AddItem}
             />
             <Items   
-             items={items}
+            items={items}
+            filteredItems={filteredItems}   
               />
-            <Footer items={items}/>
+            <Footer filteredItems={filteredItems}/>
         </div>
 
     )

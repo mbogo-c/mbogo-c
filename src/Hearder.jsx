@@ -1,4 +1,4 @@
-export default function Header ({item,handleChange,AddItem}){
+export default function Header ({filteredItem,handleSearch,item,handleChange,AddItem}){
 
      
      return(
@@ -14,7 +14,12 @@ export default function Header ({item,handleChange,AddItem}){
                <button
                onClick={()=>AddItem()}
                >Add Item</button>  
-               <input type="text " id="search" placeholder="Search Item"/>    
+               <input
+               value={filteredItem}
+               onChange={(e)=>handleSearch(e)}
+                type="text "
+                 id="search" 
+                 placeholder="Search Item"/>    
                </label>           
                
           </form>

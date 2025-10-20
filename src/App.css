@@ -26,6 +26,7 @@ ul{
 }
 .header{
      display: flex;
+     height: auto;
      margin-top: 10vh;
      flex-direction: column;
      position: fixed;
@@ -37,8 +38,9 @@ ul{
      justify-content: center;
 }
 #search{
+     height: 30px;
      width: 30vw;
-     margin-left: 26vw;
+     margin-left: 5vw;
      margin-top:5px ;
      border-radius: 10px;
 }
@@ -65,8 +67,10 @@ button{
      border-radius: 15px;
 }
 .items{
+     margin-top: 25vh;
+     margin-bottom: 10vh;
      display: flex;
-     height:145vh;
+     height: auto;
      justify-content: center;
      align-items: center;
      flex-direction: column;
