@@ -1,83 +1,80 @@
 import { useEffect, useState } from "react";
-import Header from "./Hearder";
-import  Items from "./Items";
-import Footer from "./Footer";
-import  "./App.css";
+import AddItem from "./Components/AddItem";
+import Content from "./Components/Content";
+import Footer from "./Components/Footer";
+import Header from "./Components/Header";
+import "./App.css"
+import Search from "./Components/Search";
 
-export default function App (){
-    const [items, setItems] = useState ([
-        {
-            id:1,
-            checked: false,
-            item: "Milk"    
-        },{
-            id:2,
-            checked: true,
-            item: "Eggs"
-        },{
-            id:3,
-            checked: false,
-            item: "Bread"
-        },{
-            id:4,
-            checked: true,
-            item: "Butter"
-        },{
-            id:5,
-            checked: false,
-            item: "Juice"
-        }
-    ]);
-    const [item, setItem] = useState('');
-    const [search, setSearch] = useState('');
-    const [filteredItems, setFilteredItems] = useState([]);
-    
-    function handleChange(e){
-        setItem(e.target.value.trimStart()); 
-        
+export default function (){
+const [items,setItems] = useState(JSON.parse(localStorage.getItem("shoppingList") ) || [])
+const [item,setItem] = useState("")
+const [search,setSearch] = useState("")
 
-    }
-function AddItem (){
-     const newItem = {
-               id: items.length ? items[items.length -1].id +1 : 1,
-               checked: false,
-               item:item[0].toUpperCase() + item.slice(1)
-          };
-          item.length ? `${setItems ([...items, newItem])}${setItem('')}`
-          :
-          setItem('');
-          console.log(items.length);
-}   
-console.log(search);
+     
 
-function handleSearch (e){    
-    const filteredText = (e.target.value);
-   const filteredList =  items.filter((item)=>item.item.toLocaleLowerCase().includes(filteredText.toLocaleLowerCase()))
+     function setAndSaveItem(newItems){
+     setItems(newItems)
+     localStorage.setItem("shoppingList",JSON.stringify(newItems))
+  }
+  
 
-   setFilteredItems(filteredList);
-   
-   
+  function AddItems(e){
+     e.preventDefault()
+     if(item.length){
+     const listItem = {
+          id:crypto.randomUUID(),
+          checked:false,
+          name:item.length ? item.charAt(0).toUpperCase() + item.slice(1) : setItem("") 
+     }
+     const newItems = [...items,listItem]
+     setAndSaveItem(newItems)
+     setItem("")
+}else{
+     setItem("")
 }
-useEffect(()=>{
-setFilteredItems(items);
-},[items]);
+  }
 
-    return(
-        <div className="App">
-            <h1 className="head">Gocery List</h1>
-            <Header
-            filteredItems={filteredItems}
-            item={item}
-            handleSearch={handleSearch}
-            handleChange={handleChange}
-            AddItem={AddItem}
-            />
-            <Items   
-            items={items}
-            filteredItems={filteredItems}   
-              />
-            <Footer filteredItems={filteredItems}/>
-        </div>
+  function handleChecked(id){
+     const listItem = items.map((item)=>
+          item.id === id ? {...item,checked:!item.checked} : item
+          
+     )
+     setAndSaveItem(listItem)
+  }
 
-    )
+  function handleDelete(id){
+     const listItem = items.filter((item)=>
+          item.id !== id 
+     )
+     setAndSaveItem(listItem)
+  }
+     function filteredItem(){
+          return items.filter((item)=>(item.name).toLowerCase().includes(search.toLowerCase()))
+     }
+     
+     return(
+          <div className="App">
+               <Header/>
+               <AddItem
+               item={item}
+               setItem={setItem}
+               AddItems={AddItems}
+               />
+
+               <Search
+               search={search}
+               setSearch={setSearch}
+               />
+
+               <Content
+               handleChecked={handleChecked}
+               handleDelete={handleDelete}
+               items={filteredItem(items)}
+               />
+               <Footer
+               items={filteredItem(items)}
+               />
+          </div>
+     )
 }
